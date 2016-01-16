@@ -32,4 +32,13 @@ Vagrant.configure(2) do |config|
     rm -rf /var/www/html
     ln -s /var/www/todo/public /var/www/html
   SHELL
+
+  # day 3
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    sudo apt-get -y install php7.0-curl
+    sudo a2enmod rewrite
+    sudo cp /vagrant/default.conf /etc/apache2/sites-enabled/000-default.conf
+    sudo service apache2 restart
+    cd /var/www/todo && composer require "laravel/socialite:2.0.*"
+  SHELL
 end
